@@ -9,18 +9,20 @@ public class client {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Scanner s = new Scanner(System.in);
         
         int sockfd, portno, n;
 
         portno = s.nextInt();
 
-        try {
-            ServerSocket serverSocket = new ServerSocket(portno);
-        }
-        catch(IOException err) {
-            System.out.println("Error creating socket");
-        }
+        //create socket
+        ServerSocket serverSocket = new ServerSocket(portno);
+    
+        //connect to server
+        serverSocket.accept();
+
+        //close socket
+        serverSocket.close();
     }
 }
