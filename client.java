@@ -1,28 +1,32 @@
-import java.util.Scanner;
-import java.io.IOException;
-import java.net.ServerSocket;
+import java.io.DataInputStream;
+import java.io.FileOutputStream;
+import java.net.Socket;
 
 public class client {
+    public static void main(String[] args) throws Exception {
+        Socket socket = new Socket("localhost", 9876); // Server's IP address and port number
 
-    void error(String message) {
-        //TODO
-    }
+        // Get input stream from the socket
+        DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
 
+        // Read file size from the server
+        int fileSize = dataInputStream.readInt();
 
-    public static void main(String[] args) throws IOException {
-        Scanner s = new Scanner(System.in);
-        
-        int sockfd, portno, n;
+        // Read file data from the server
+        byte[] fileBytes = new byte[fileSize];
+        dataInputStream.readFully(fileBytes, 0, fileSize);
 
-        portno = s.nextInt();
+        // Specify the location to save the received file
+        FileOutputStream fileOutputStream = new FileOutputStream("C:\\Users\\sarah\\OneDrive\\Documents\\GVSU\\Year5\\CIS-457\\project\\cis457-file-transfer-application\\file.txt");
 
-        //create socket
-        ServerSocket serverSocket = new ServerSocket(portno);
-    
-        //connect to server
-        serverSocket.accept();
+        // Write the file data to the output file
+        fileOutputStream.write(fileBytes, 0, fileSize);
 
-        //close socket
-        serverSocket.close();
+        System.out.println("File received from server.");
+
+        // Close streams and socket
+        fileOutputStream.close();
+        dataInputStream.close();
+        socket.close();
     }
 }
