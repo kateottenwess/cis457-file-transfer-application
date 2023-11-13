@@ -1,10 +1,16 @@
 import java.io.DataInputStream;
 import java.io.FileOutputStream;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class client {
     public static void main(String[] args) throws Exception {
-        Socket socket = new Socket("localhost", 9876); // Server's IP address and port number
+
+        Scanner s = new Scanner(System.in);
+
+        int portno = s.nextInt();
+
+        Socket socket = new Socket("localhost", portno); // Server's IP address and port number
 
         // Get input stream from the socket
         DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
@@ -17,7 +23,10 @@ public class client {
         dataInputStream.readFully(fileBytes, 0, fileSize);
 
         // Specify the location to save the received file
-        FileOutputStream fileOutputStream = new FileOutputStream("./file.txt");
+        //./file.txt
+        String outputfile = s.next();
+
+        FileOutputStream fileOutputStream = new FileOutputStream(outputfile);
 
         // Write the file data to the output file
         fileOutputStream.write(fileBytes, 0, fileSize);
@@ -28,5 +37,6 @@ public class client {
         fileOutputStream.close();
         dataInputStream.close();
         socket.close();
+        s.close();
     }
 }

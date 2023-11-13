@@ -3,19 +3,27 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class server {
     public static void main(String[] args) throws Exception {
-        ServerSocket serverSocket = new ServerSocket(9876); // Port number
+        Scanner s = new Scanner(System.in);
 
-        System.out.println("Server waiting for client on port 9876...");
+        int portno = s.nextInt();
+
+
+        ServerSocket serverSocket = new ServerSocket(portno); // Port number
+
+        System.out.println("Server waiting for client on port " + portno + "...");
 
         while (true) {
             Socket clientSocket = serverSocket.accept();
             System.out.println("Accepted connection from " + clientSocket.getInetAddress());
 
             // Specify the file to be transferred
-            File file = new File("../sample.txt");
+            String filepath = s.next();
+            File file = new File(filepath);
+            //../sample.txt
 
             // Create input stream from file
             FileInputStream fileInputStream = new FileInputStream(file);
@@ -37,6 +45,9 @@ public class server {
             fileInputStream.close();
             dataOutputStream.close();
             clientSocket.close();
+            serverSocket.close();
+            s.close();
+            break;
         }
     }
 }
