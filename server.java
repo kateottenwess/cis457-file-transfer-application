@@ -15,7 +15,7 @@ public class server {
             System.out.println("Accepted connection from " + clientSocket.getInetAddress());
 
             // Specify the file to be transferred
-            File file = new File("C:\\Users\\sarah\\OneDrive\\Documents\\GVSU\\Year5\\CIS-457\\project\\sample.txt");
+            File file = new File("../sample.txt");
 
             // Create input stream from file
             FileInputStream fileInputStream = new FileInputStream(file);

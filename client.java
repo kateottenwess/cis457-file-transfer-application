@@ -17,7 +17,7 @@ public class client {
         dataInputStream.readFully(fileBytes, 0, fileSize);
 
         // Specify the location to save the received file
-        FileOutputStream fileOutputStream = new FileOutputStream("C:\\Users\\sarah\\OneDrive\\Documents\\GVSU\\Year5\\CIS-457\\project\\cis457-file-transfer-application\\file.txt");
+        FileOutputStream fileOutputStream = new FileOutputStream("./file.txt");
 
         // Write the file data to the output file
         fileOutputStream.write(fileBytes, 0, fileSize);
