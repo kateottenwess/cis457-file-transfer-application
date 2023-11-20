@@ -1,39 +1,53 @@
+/**
+ * Kate Ottenwess & Sarah Wight
+ * CIS 457-02
+ * Term Project
+ * Due Date: 12/4/2023
+ */
+
 import java.io.DataInputStream;
 import java.io.FileOutputStream;
 import java.net.Socket;
 import java.util.Scanner;
 
+/**
+ * Client Class
+ */
 public class client {
     public static void main(String[] args) throws Exception {
 
         Scanner s = new Scanner(System.in);
 
-        int portno = s.nextInt();
+        // takes user input for port number
+        System.out.println("Enter port number: ");
+        int portNum = s.nextInt();
 
-        Socket socket = new Socket("localhost", portno); // Server's IP address and port number
+        // creates socket with server's IP address and port number
+        Socket socket = new Socket("localhost", portNum); 
 
-        // Get input stream from the socket
+        // get input stream from socket
         DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
 
-        // Read file size from the server
+        // read file size from server
         int fileSize = dataInputStream.readInt();
 
-        // Read file data from the server
+        // read file data from server
         byte[] fileBytes = new byte[fileSize];
         dataInputStream.readFully(fileBytes, 0, fileSize);
 
-        // Specify the location to save the received file
-        //./file.txt
+        // specify location to save received file
+        System.out.println("Enter destination path for received file: ");
         String outputfile = s.next();
 
+        // create output stream from file
         FileOutputStream fileOutputStream = new FileOutputStream(outputfile);
 
-        // Write the file data to the output file
+        // write file data to output file
         fileOutputStream.write(fileBytes, 0, fileSize);
 
         System.out.println("File received from server.");
 
-        // Close streams and socket
+        // close streams and socket
         fileOutputStream.close();
         dataInputStream.close();
         socket.close();
